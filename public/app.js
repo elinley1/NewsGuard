@@ -33,7 +33,7 @@ $(document).on("click", "p", function () {
 $(document).on("click", "#savenote", function () {
     var dId = $(this).attr("data-id");
 
-    $ajax({
+    $.ajax({
         method: "POST",
         url: "/articles/" + dId,
         data: {
