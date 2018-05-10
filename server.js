@@ -1,3 +1,5 @@
+console.log("Starting APP Server")
+console.log("Loading  Dependencies")
 var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
@@ -12,6 +14,7 @@ var db = require("./models");
 
 var PORT = 3000;
 
+console.log("Initializing Express APP")
 // Initialize Express
 var app = express();
 
@@ -21,12 +24,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 //connect to the Mongo DB
+console.log("Connecting to Mongo...")
+var mongo_username = "scraping_app_user"
+var mongo_password = "password123"
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/Articles"
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, {user: mongo_username, pass: mongo_password}).then(
+    () => { console.log("Connected to Mongo. Yay!") },
+    err => { console.error("failed to connect to mongo :(", err) }
+  );
 
 
 //Routes
+console.log("Registering Routes")
 app.get("/", function (req, res) {
     axios.get("https://www.theguardian.com").then(function (response) {
         let $ = cheerio.load(response.data);
@@ -93,6 +103,8 @@ app.post("/articles/:id", function (req, res) {
             res.json(err);
         });
 });
+
+console.log("Starting the app listener")
 //server
 app.listen(PORT, function () {
     console.log("App running on port " + PORT + ".");
