@@ -60,14 +60,14 @@ app.get("/", function (req, res) {
 
             db.Article.create(result)
                 .then(function (dbArticle) {
-                    res.json(dbArticle);
+                    console.log("Create article", dbArticle);
                 })
                 .catch(function (err) {
-                    return res.json(err);
+                    console.err("Error creating article", dbArticle);
                 });
             });
 
-            console.log("Scrape Success");
+            
         res.sendFile("./public/my-index.html");
     });
 });
