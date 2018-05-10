@@ -44,7 +44,6 @@ app.get("/", function (req, res) {
         console.log('Inside the scraping logic');
 
         $(".fc-item__title").each(function (i, el) {
-            console.log(el)
             var result = {};
 
             result.title = $(this).find(".fc-item__kicker").text()
@@ -66,10 +65,8 @@ app.get("/", function (req, res) {
                     console.err("Error creating article", dbArticle);
                 });
             });
-
-            
+            res.sendFile("./public/my-index.html");
     });
-    return res.sendFile("./public/my-index.html");
 });
 
 app.get("/articles", function (req, res) {
