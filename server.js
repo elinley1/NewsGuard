@@ -39,7 +39,7 @@ mongoose.connect(MONGODB_URI, {user: mongo_username, pass: mongo_password}).then
 console.log("Registering Routes")
 app.get("/", function (req, res) {
     console.log("Hit Home Handler");
-    return axios.get("https://www.theguardian.com").then(function (response) {
+    axios.get("https://www.theguardian.com").then(function (response) {
         let $ = cheerio.load(response.data);
         console.log('Inside the scraping logic');
 
@@ -68,8 +68,8 @@ app.get("/", function (req, res) {
             });
 
             
-        res.sendFile("./public/my-index.html");
     });
+    return res.sendFile("./public/my-index.html");
 });
 
 app.get("/articles", function (req, res) {
