@@ -68,7 +68,7 @@ app.get("/", function (req, res) {
             });
 
             console.log("Scrape Success");
-        res.send("Scrape success!");
+        res.sendFile("./public/my-index.html");
     });
 });
 
