@@ -59,13 +59,12 @@ app.get("/", function (req, res) {
 
             return db.Article.create(result)
                 .then(function (dbArticle) {
-                    console.log("Create article", dbArticle);
-                })
-                .catch(function (err) {
-                    console.err("Error creating article", dbArticle);
+                    console.log("Create article");
+                    return dbArticle;
                 });
             });
-        Promise.all(createPromises).then(function() {
+        console.log("All Create Promises", createPromises);
+        Promise.all(createPromises).then(function(articles) {
             console.log("Finished all create articles")
             res.sendFile("./public/my-index.html");
         })
