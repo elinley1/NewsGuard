@@ -20,7 +20,7 @@ var ArticleSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Note"
     }
-}, { _id: false });
+});
 
 var Article = mongoose.model("Article", ArticleSchema);
 

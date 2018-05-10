@@ -56,13 +56,14 @@ app.get("/", function (req, res) {
             //console.log(result.summary);
 
             console.log('result: ',result);
-
-            return db.Article.create(result)
+            var query = {'link': result.link};
+            return db.Article.findOneAndUpdate(query, result, {upsert:true})
                 .then(function (dbArticle) {
                     console.log("Create article");
                     return dbArticle;
                 });
             }).get();
+            
         console.log("All Create Promises", createPromises);
         Promise.all(createPromises).then(function(articles) {
             console.log("Finished all create articles")
