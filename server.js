@@ -43,7 +43,7 @@ app.get("/", function (req, res) {
         let $ = cheerio.load(response.data);
         console.log('Inside the scraping logic');
 
-        $(".fc-item__title").each(function (i, el) {
+        let createPromises = $(".fc-item__title").map(function (i, el) {
             var result = {};
 
             result.title = $(this).find(".fc-item__kicker").text()
@@ -57,7 +57,7 @@ app.get("/", function (req, res) {
 
             console.log('result: ',result);
 
-            db.Article.create(result)
+            return db.Article.create(result)
                 .then(function (dbArticle) {
                     console.log("Create article", dbArticle);
                 })
@@ -65,7 +65,10 @@ app.get("/", function (req, res) {
                     console.err("Error creating article", dbArticle);
                 });
             });
+        Promise.all(createPromises).then(function() {
+            console.log("Finished all create articles")
             res.sendFile("./public/my-index.html");
+        })
     });
 });
 
