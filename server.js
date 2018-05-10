@@ -62,7 +62,7 @@ app.get("/", function (req, res) {
                     console.log("Create article");
                     return dbArticle;
                 });
-            });
+            }).get();
         console.log("All Create Promises", createPromises);
         Promise.all(createPromises).then(function(articles) {
             console.log("Finished all create articles")
